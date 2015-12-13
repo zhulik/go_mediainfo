@@ -6,12 +6,12 @@ package mediainfo
 import "C"
 
 import (
-	"errors"
 	"fmt"
 	"runtime"
 	"unsafe"
 )
 
+// MediaInfo - represents MediaInfo class, all interation with libmediainfo through it
 type MediaInfo struct {
 	handle unsafe.Pointer
 }
@@ -25,6 +25,7 @@ func init() {
 	}
 }
 
+// NewMediaInfo - constructs new MediaInfo
 func NewMediaInfo() *MediaInfo {
 	result := &MediaInfo{handle: C.GoMediaInfo_New()}
 	runtime.SetFinalizer(result, func(f *MediaInfo) {
@@ -33,18 +34,21 @@ func NewMediaInfo() *MediaInfo {
 	return result
 }
 
+// Open - opens file
 func (mi *MediaInfo) Open(path string) error {
 	s := C.GoMediaInfo_Open(mi.handle, C.CString(path))
 	if s == 0 {
-		return errors.New(fmt.Sprintf("MediaInfo can't open file: %s", path))
+		return fmt.Errorf("MediaInfo can't open file: %s", path)
 	}
 	return nil
 }
 
+// Close - closes file
 func (mi *MediaInfo) Close() {
 	C.GoMediaInfo_Close(mi.handle)
 }
 
+// Get - allow to read info from file
 func (mi *MediaInfo) Get(param string) string {
 	return C.GoString(C.GoMediaInfoGet(mi.handle, C.CString(param)))
 }
