@@ -34,11 +34,20 @@ func NewMediaInfo() *MediaInfo {
 	return result
 }
 
-// Open - opens file
-func (mi *MediaInfo) Open(path string) error {
-	s := C.GoMediaInfo_Open(mi.handle, C.CString(path))
+// OpenFile - opens file
+func (mi *MediaInfo) OpenFile(path string) error {
+	s := C.GoMediaInfo_OpenFile(mi.handle, C.CString(path))
 	if s == 0 {
 		return fmt.Errorf("MediaInfo can't open file: %s", path)
+	}
+	return nil
+}
+
+// OpenMemory - opens memory buffer
+func (mi *MediaInfo) OpenMemory(bytes []byte) error {
+	s := C.GoMediaInfo_OpenMemory(mi.handle, (*C.char)(unsafe.Pointer(&bytes[0])), C.size_t(len(bytes)))
+	if s == 0 {
+		return fmt.Errorf("MediaInfo can't open memory buffer")
 	}
 	return nil
 }

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <locale.h>
+#include <limits.h>
 
 const wchar_t *toWchar(const char *c)
 {
@@ -29,8 +30,15 @@ void GoMediaInfo_Delete(void *handle) {
     MediaInfo_Delete(handle);
 }
 
-size_t GoMediaInfo_Open(void *handle, char *name) {
+size_t GoMediaInfo_OpenFile(void *handle, char *name) {
     return MediaInfo_Open(handle, toWchar(name));
+}
+
+size_t GoMediaInfo_OpenMemory(void *handle, char *bytes, size_t length) {
+    MediaInfo_Open_Buffer_Init(handle, ULLONG_MAX, 0);
+    MediaInfo_Open_Buffer_Continue(handle, bytes, length);
+
+    return MediaInfo_Open_Buffer_Finalize(handle);
 }
 
 void GoMediaInfo_Close(void *handle) {
