@@ -6,9 +6,10 @@ package mediainfo
 import "C"
 
 import (
-	"unsafe"
 	"errors"
 	"fmt"
+	"runtime"
+	"unsafe"
 )
 
 type MediaInfo struct {
@@ -16,6 +17,7 @@ type MediaInfo struct {
 }
 
 func init() {
+	C.setlocale(C.LC_CTYPE, C.CString(""))
 	C.MediaInfoDLL_Load()
 
 	if C.MediaInfoDLL_IsLoaded() == 0 {
@@ -23,8 +25,12 @@ func init() {
 	}
 }
 
-func NewMediaInfo() (*MediaInfo) {
-	return &MediaInfo{handle: C.GoMediaInfo_New()}
+func NewMediaInfo() *MediaInfo {
+	result := &MediaInfo{handle: C.GoMediaInfo_New()}
+	runtime.SetFinalizer(result, func(f *MediaInfo) {
+		C.GoMediaInfo_Delete(f.handle)
+	})
+	return result
 }
 
 func (mi *MediaInfo) Open(path string) error {

@@ -22,7 +22,6 @@ const char *toChar(const wchar_t *c)
 }
 
 void *GoMediaInfo_New() {
-    setlocale(LC_CTYPE, "");
     return MediaInfo_New();
 }
 
