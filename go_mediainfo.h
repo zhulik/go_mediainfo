@@ -35,7 +35,7 @@ size_t GoMediaInfo_OpenFile(void *handle, char *name) {
 }
 
 size_t GoMediaInfo_OpenMemory(void *handle, char *bytes, size_t length) {
-    MediaInfo_Open_Buffer_Init(handle, ULLONG_MAX, 0);
+    MediaInfo_Open_Buffer_Init(handle, length, 0);
     MediaInfo_Open_Buffer_Continue(handle, bytes, length);
 
     return MediaInfo_Open_Buffer_Finalize(handle);
