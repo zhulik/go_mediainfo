@@ -48,3 +48,11 @@ void GoMediaInfo_Close(void *handle) {
 const char *GoMediaInfoGet(void *handle, char *name) {
     return toChar(MediaInfo_Get(handle, MediaInfo_Stream_General, 0,  toWchar(name), MediaInfo_Info_Text, MediaInfo_Info_Name));
 }
+
+const char *GoMediaInfoAvailableParameters(void *handle) {
+    return toChar(MediaInfo_Option(handle, L"Info_Parameters", L""));
+}
+
+const char *GoMediaInfoInform(void *handle) {
+    return toChar(MediaInfo_Inform(handle, 0));
+}

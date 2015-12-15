@@ -61,3 +61,14 @@ func (mi *MediaInfo) Close() {
 func (mi *MediaInfo) Get(param string) string {
 	return C.GoString(C.GoMediaInfoGet(mi.handle, C.CString(param)))
 }
+
+// Inform returns string with suffary file information, like mediainfo util
+func (mi *MediaInfo) Inform() string {
+	return C.GoString(C.GoMediaInfoInform(mi.handle))
+}
+
+// AvailableParameters returns string with all available Get params and it's descriptions
+func (mi *MediaInfo) AvailableParameters() string {
+	return C.GoString(C.GoMediaInfoAvailableParameters(mi.handle))
+
+}
