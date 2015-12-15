@@ -121,3 +121,43 @@ func TestDurationWithMp3(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func BenchmarkOpenAndDurationWithOgg(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		mi := mediainfo.NewMediaInfo()
+		mi.OpenFile(ogg)
+
+		mi.Duration()
+	}
+}
+
+func BenchmarkOpenAndDurationWithMp3(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		mi := mediainfo.NewMediaInfo()
+		mi.OpenFile(mp3)
+
+		mi.Duration()
+	}
+}
+
+func BenchmarkOpenMemoryAndDurationWithOgg(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		mi := mediainfo.NewMediaInfo()
+		f, _ := os.Open(ogg)
+		bytes, _ := ioutil.ReadAll(f)
+
+		mi.OpenMemory(bytes)
+		mi.Duration()
+	}
+}
+
+func BenchmarkOpenMemoryAndDurationWithMp3(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		mi := mediainfo.NewMediaInfo()
+		f, _ := os.Open(mp3)
+		bytes, _ := ioutil.ReadAll(f)
+
+		mi.OpenMemory(bytes)
+		mi.Duration()
+	}
+}
