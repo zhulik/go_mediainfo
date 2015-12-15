@@ -92,4 +92,3 @@ func (mi *MediaInfo) Codec() string {
 func (mi *MediaInfo) Format() string {
 	return mi.Get("Format")
 }
-
