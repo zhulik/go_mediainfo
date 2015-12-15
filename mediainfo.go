@@ -72,9 +72,14 @@ func (mi *MediaInfo) Inform() string {
 	return C.GoString(C.GoMediaInfoInform(mi.handle))
 }
 
+// Option configure or get information about MediaInfoLib
+func (mi *MediaInfo) Option(option string, value string) string {
+	return C.GoString(C.GoMediaInfoOption(mi.handle, C.CString(option), C.CString(value)))
+}
+
 // AvailableParameters returns string with all available Get params and it's descriptions
 func (mi *MediaInfo) AvailableParameters() string {
-	return C.GoString(C.GoMediaInfoAvailableParameters(mi.handle))
+	return mi.Option("Info_Parameters", "")
 }
 
 // Duration returns file duration
