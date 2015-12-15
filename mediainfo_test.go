@@ -67,7 +67,6 @@ func TestOpenMemoryWithEmptyArray(t *testing.T) {
 	}
 }
 
-
 func TestInformWithOgg(t *testing.T) {
 	mi := mediainfo.NewMediaInfo()
 	mi.OpenFile(ogg)
