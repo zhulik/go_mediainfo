@@ -82,3 +82,8 @@ func (mi *MediaInfo) Duration() int {
 	duration, _ := strconv.Atoi(mi.Get("Duration"))
 	return duration
 }
+
+// Codec returns file codec
+func (mi *MediaInfo) Codec() string {
+	return mi.Get("Codec")
+}

@@ -121,6 +121,25 @@ func TestDurationWithMp3(t *testing.T) {
 	}
 }
 
+func TestCodenWithOgg(t *testing.T) {
+	mi := mediainfo.NewMediaInfo()
+	mi.OpenFile(ogg)
+
+	if mi.Codec() != "OGG" {
+		t.Fail()
+	}
+}
+
+func TestCodenWithMp3(t *testing.T) {
+	mi := mediainfo.NewMediaInfo()
+	mi.OpenFile(mp3)
+
+	if mi.Codec() != "MPEG Audio" {
+		t.Fail()
+	}
+}
+
+//----------------------------------------------------------------------------------------------------------------------
 func BenchmarkOpenAndDurationWithOgg(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		mi := mediainfo.NewMediaInfo()
