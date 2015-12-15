@@ -87,3 +87,9 @@ func (mi *MediaInfo) Duration() int {
 func (mi *MediaInfo) Codec() string {
 	return mi.Get("Codec")
 }
+
+// Format returns file codec
+func (mi *MediaInfo) Format() string {
+	return mi.Get("Format")
+}
+
