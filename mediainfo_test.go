@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"testing"
+	"fmt"
 )
 
 const (
@@ -196,4 +197,25 @@ func BenchmarkOpenMemoryAndDurationWithMp3(b *testing.B) {
 		mi.OpenMemory(bytes)
 		mi.Duration()
 	}
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+
+func ExampleUsage() {
+	f, err := os.Open(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	bytes, err := ioutil.ReadAll(f)
+	if err != nil {
+		panic(err)
+	}
+
+	mi := mediainfo.NewMediaInfo()
+	err = mi.OpenMemory(bytes)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(mi.AvailableParameters()) // Print all supported params for Get
+	fmt.Println(mi.Get("BitRate")) // Print bitrate
 }
