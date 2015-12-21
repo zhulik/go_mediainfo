@@ -38,10 +38,12 @@ func NewMediaInfo() *MediaInfo {
 
 // OpenFile - opens file
 func (mi *MediaInfo) OpenFile(path string) error {
-	s := C.GoMediaInfo_OpenFile(mi.handle, C.CString(path))
+	p := C.CString(path)
+	s := C.GoMediaInfo_OpenFile(mi.handle, p)
 	if s == 0 {
 		return fmt.Errorf("MediaInfo can't open file: %s", path)
 	}
+	C.free(unsafe.Pointer(p))
 	return nil
 }
 
@@ -63,18 +65,33 @@ func (mi *MediaInfo) Close() {
 }
 
 // Get - allow to read info from file
-func (mi *MediaInfo) Get(param string) string {
-	return C.GoString(C.GoMediaInfoGet(mi.handle, C.CString(param)))
+func (mi *MediaInfo) Get(param string) (result string) {
+	p := C.CString(param)
+	r := C.GoMediaInfoGet(mi.handle, p)
+	result = C.GoString(r)
+	C.free(unsafe.Pointer(p))
+	C.free(unsafe.Pointer(r))
+	return
 }
 
-// Inform returns string with suffary file information, like mediainfo util
-func (mi *MediaInfo) Inform() string {
-	return C.GoString(C.GoMediaInfoInform(mi.handle))
+// Inform returns string with summary file information, like mediainfo util
+func (mi *MediaInfo) Inform() (result string) {
+	r := C.GoMediaInfoInform(mi.handle)
+	result = C.GoString(r)
+	C.free(unsafe.Pointer(r))
+	return
 }
 
 // Option configure or get information about MediaInfoLib
-func (mi *MediaInfo) Option(option string, value string) string {
-	return C.GoString(C.GoMediaInfoOption(mi.handle, C.CString(option), C.CString(value)))
+func (mi *MediaInfo) Option(option string, value string) (result string) {
+	o := C.CString(option)
+	v := C.CString(value)
+	r := C.GoMediaInfoOption(mi.handle, o, v)
+	C.free(unsafe.Pointer(o))
+	C.free(unsafe.Pointer(v))
+	result = C.GoString(r)
+	C.free(unsafe.Pointer(r))
+	return
 }
 
 // AvailableParameters returns string with all available Get params and it's descriptions
