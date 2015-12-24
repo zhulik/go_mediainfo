@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	ogg        = "testdata/test.ogg"
-	mp3        = "testdata/test.mp3"
+	ogg       = "testdata/test.ogg"
+	mp3       = "testdata/test.mp3"
 	nonExists = "testdata/non_exists.ogg"
 )
 
