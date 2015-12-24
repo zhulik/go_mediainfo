@@ -1,11 +1,11 @@
 package mediainfo_test
 
 import (
+	"fmt"
 	"github.com/zhulik/go_mediainfo"
 	"io/ioutil"
 	"os"
 	"testing"
-	"fmt"
 )
 
 const (
@@ -217,5 +217,5 @@ func ExampleUsage() {
 		panic(err)
 	}
 	fmt.Println(mi.AvailableParameters()) // Print all supported params for Get
-	fmt.Println(mi.Get("BitRate")) // Print bitrate
+	fmt.Println(mi.Get("BitRate"))        // Print bitrate
 }
