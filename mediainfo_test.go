@@ -11,7 +11,7 @@ import (
 const (
 	ogg        = "testdata/test.ogg"
 	mp3        = "testdata/test.mp3"
-	non_exists = "testdata/non_exists.ogg"
+	nonExists = "testdata/non_exists.ogg"
 )
 
 func TestOpenWithOgg(t *testing.T) {
@@ -32,7 +32,7 @@ func TestOpenWithMp3(t *testing.T) {
 
 func TestOpenWithUnexistsFile(t *testing.T) {
 	mi := mediainfo.NewMediaInfo()
-	error := mi.OpenFile(non_exists)
+	error := mi.OpenFile(nonExists)
 	if error == nil {
 		t.Fail()
 	}
